@@ -1,3 +1,4 @@
+import java.lang.IllegalArgumentException;
 import java.util.NoSuchElementException;
 
 /**
@@ -9,7 +10,6 @@ public class ArrayList<T> {
      * DO NOT MODIFY THIS VARIABLE!
      */
     public static final int INITIAL_CAPACITY = 9;
-    private int array_capacity = INITIAL_CAPACITY;
     /*
      * Do not add new instance variables or modify existing ones.
      */
@@ -26,7 +26,30 @@ public class ArrayList<T> {
         backingArray = (T[]) new Object[INITIAL_CAPACITY];
     }
 
+    private T[] resize() {
+        // Resize array to twice as large. Copy all existing data to the newly made array.
+        this.size = this.size * 2;
+        T[] newArray;
+        newArray = (T[]) new Object[this.size];
+        for (int i=0; i<backingArray.length; i++){
+            newArray[i] = backingArray[i];
+        }
+        return newArray;
+    }
 
+    private void checkNull(T data){
+        // Call this method every time data is entered to ensure it is not null values.
+        if (data == null) {
+            throw new IllegalArgumentException("Tried to add null data");
+        }
+    }
+
+    private void checkRemovalCanHappen(){
+        // Method to check that the array is not empty, and we can in fact remove items from it.
+        if (this.size == 0) {
+            throw new NoSuchElementException();
+        }
+    }
 
     /**
      * Adds the data to the front of the list.
@@ -37,16 +60,16 @@ public class ArrayList<T> {
      * @throws java.lang.IllegalArgumentException if data is null
      */
     public void addToFront(T data) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        if (data == null) {
-            throw java.lang.IllegalArgumentException("Tried to add null data");
-        } else {
-            if (size == array_capacity) {
-                // We are trying to add an item to a full Array and will need to resize it
-                array_capacity = array_capacity * 2;
-                backingArray = (T[]) new Object[array_capacity];
-            }
+        checkNull(data);
+        if (size == this.backingArray.length) {
+            this.backingArray = this.resize(); // Resize array before adding to front
         }
+        // Now shift all items
+        for (int i=this.size - 1; i>=1; i--){
+            this.backingArray[i] = this.backingArray[i-1]; // TODO: Fix an out of bounds error
+        }
+        this.backingArray[0] = data;
+        this.size += 1;
     }
 
     /**
@@ -57,7 +80,13 @@ public class ArrayList<T> {
      * @throws java.lang.IllegalArgumentException if data is null
      */
     public void addToBack(T data) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        checkNull(data);
+        int useIndex = size; // Save value in case array gets resized
+        if (size == this.backingArray.length) {
+            this.backingArray = this.resize(); // Resize array before adding to front
+        }
+        this.backingArray[useIndex] = data;
+        this.size += 1;
     }
 
     /**
@@ -70,7 +99,14 @@ public class ArrayList<T> {
      * @throws java.util.NoSuchElementException if the list is empty
      */
     public T removeFromFront() {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        checkRemovalCanHappen();
+        T result = this.backingArray[0]; // Save value for return
+        for (int i=0; i<=this.size - 2; i++){
+            this.backingArray[i] = this.backingArray[i+1]; // TODO: Fix out of bounds error
+        }
+        this.backingArray[this.size - 1] = null;
+        this.size -= 1;
+        return result;
     }
 
     /**
@@ -82,7 +118,10 @@ public class ArrayList<T> {
      * @throws java.util.NoSuchElementException if the list is empty
      */
     public T removeFromBack() {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        checkRemovalCanHappen();
+        T result = this.backingArray[this.size - 1];
+        this.backingArray[this.size - 1] = null;
+        return result;
     }
 
     /**
@@ -108,16 +147,35 @@ public class ArrayList<T> {
         // DO NOT MODIFY THIS METHOD!
         return size;
     }
+
+    public static void main(String[] args) {
+        args = new String[2];
+        args[0] = "Hello";
+        args[1] = "World";
+        Main.main(args);
+    }
 }
 
-class Main {
+
+class Main{
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
         System.out.print("Hello and welcome!\n");
-        int[] intArray = new int[]{1, 2, 3, 4, 5};
-        int largest = FindMax.findMax(intArray);
-        System.out.println("Largest number found was: " + String.valueOf(largest));
+        ArrayList<Integer> myList = new ArrayList<Integer>();
+        myList.addToFront(1);
+        myList.addToFront(2);
+        myList.addToFront(3);
+        myList.addToFront(4);
+        myList.addToFront(5);
+        myList.addToFront(6);
+        myList.addToFront(7);
+        myList.addToFront(8);
+        myList.addToFront(9);
+        myList.removeFromFront();
+        myList.addToBack(1);
+        myList.removeFromBack();
+        // ArrayList<Integer> myList = new ArrayList<Integer>(10);
+        System.out.print("\n");
+        System.out.print(myList);
 
 //        for (int i = 1; i <= 5; i++) {
 //            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
@@ -126,3 +184,4 @@ class Main {
 //        }
     }
 }
+
