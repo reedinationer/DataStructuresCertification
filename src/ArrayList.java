@@ -1,4 +1,5 @@
 import java.lang.IllegalArgumentException;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 /**
@@ -27,12 +28,10 @@ public class ArrayList<T> {
     }
 
     private T[] resize() {
-        // Resize array to twice as large. Copy all existing data to the newly made array.
-        this.size = this.size * 2;
         T[] newArray;
-        newArray = (T[]) new Object[this.size];
+        newArray = (T[]) new Object[2 * backingArray.length]; // Make an array twice as large as the one we just had
         for (int i=0; i<backingArray.length; i++){
-            newArray[i] = backingArray[i];
+            newArray[i] = backingArray[i]; // Copy all the data to it
         }
         return newArray;
     }
@@ -64,9 +63,11 @@ public class ArrayList<T> {
         if (size == this.backingArray.length) {
             this.backingArray = this.resize(); // Resize array before adding to front
         }
-        // Now shift all items
-        for (int i=this.size - 1; i>=1; i--){
-            this.backingArray[i] = this.backingArray[i-1]; // TODO: Fix an out of bounds error
+        if (this.size > 0) {
+            // Now shift all items
+            for (int i = this.size; i - 1 >= 0; i--) {
+                this.backingArray[i] = this.backingArray[i - 1];
+            }
         }
         this.backingArray[0] = data;
         this.size += 1;
@@ -102,7 +103,7 @@ public class ArrayList<T> {
         checkRemovalCanHappen();
         T result = this.backingArray[0]; // Save value for return
         for (int i=0; i<=this.size - 2; i++){
-            this.backingArray[i] = this.backingArray[i+1]; // TODO: Fix out of bounds error
+            this.backingArray[i] = this.backingArray[i+1];
         }
         this.backingArray[this.size - 1] = null;
         this.size -= 1;
@@ -121,6 +122,7 @@ public class ArrayList<T> {
         checkRemovalCanHappen();
         T result = this.backingArray[this.size - 1];
         this.backingArray[this.size - 1] = null;
+        this.size -= 1;
         return result;
     }
 
@@ -159,19 +161,26 @@ public class ArrayList<T> {
 
 class Main{
     public static void main(String[] args) {
-        System.out.print("Hello and welcome!\n");
-        ArrayList<Integer> myList = new ArrayList<Integer>();
-        myList.addToFront(1);
-        myList.addToFront(2);
-        myList.addToFront(3);
-        myList.addToFront(4);
-        myList.addToFront(5);
-        myList.addToFront(6);
-        myList.addToFront(7);
-        myList.addToFront(8);
-        myList.addToFront(9);
+//      [Test Failure: addToFront] [-0.43] : Unexpected content after adding once to the front.
+//	    Expected : [0a, 1a, 2a, 3a, 4a, null, null, null, null]
+//	    Actual : [0a, 1a, 2a, 3a, null, null, null, null, null]
+        ArrayList<String> myList = new ArrayList<String>();
+        myList.addToFront("8a");
+        myList.addToFront("7a");
+        myList.addToFront("6a");
+        myList.addToFront("5a");
+        myList.addToFront("4a");
+        myList.addToFront("3a");
+        myList.addToFront("2a");
+        myList.addToFront("1a");
+        myList.addToFront("0a");
+        System.out.println(Arrays.toString(myList.getBackingArray()));
+//        myList.addToFront(6);
+//        myList.addToFront(7);
+//        myList.addToFront(8);
+//        myList.addToFront(9);
         myList.removeFromFront();
-        myList.addToBack(1);
+//        myList.addToBack(1);
         myList.removeFromBack();
         // ArrayList<Integer> myList = new ArrayList<Integer>(10);
         System.out.print("\n");
