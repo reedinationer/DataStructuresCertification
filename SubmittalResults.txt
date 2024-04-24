@@ -1,12 +1,3 @@
-Tests Passed: 20 / 23
+[Test Failure: enqueue] [-0.48] : IllegalArgumentException not thrown when attempting to enqueue null data.
 
-[Test Failure: addToFront] [-0.43] : Unexpected content after adding once to the front.
-	Expected : [0a, 1a, 2a, 3a, 4a, null, null, null, null]
-	Actual : [0a, 1a, 2a, 3a, null, null, null, null, null]
-
-[Test Failure: addToFront] [-0.43] : Unexpected content after adding once to the front, to capacity.
-	Expected : [0a, 1a, 2a, 3a, 4a, 5a, 6a, 7a, 8a]
-	Actual : [0a, 1a, 2a, 3a, 4a, 5a, 6a, 7a, null]
-
-[Test Failure: validSize] [-0.43] : Size variable did not update correctly when testing the following method(s): removeFromBack, addToBack, addToFront.
-
+[Test Failure: validFront] [-0.48] : Front variable did not update correctly when testing the following method(s): dequeue.

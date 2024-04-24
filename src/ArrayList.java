@@ -149,48 +149,8 @@ public class ArrayList<T> {
         // DO NOT MODIFY THIS METHOD!
         return size;
     }
-
-    public static void main(String[] args) {
-        args = new String[2];
-        args[0] = "Hello";
-        args[1] = "World";
-        Main.main(args);
-    }
 }
 
 
-class Main{
-    public static void main(String[] args) {
-//      [Test Failure: addToFront] [-0.43] : Unexpected content after adding once to the front.
-//	    Expected : [0a, 1a, 2a, 3a, 4a, null, null, null, null]
-//	    Actual : [0a, 1a, 2a, 3a, null, null, null, null, null]
-        ArrayList<String> myList = new ArrayList<String>();
-        myList.addToFront("8a");
-        myList.addToFront("7a");
-        myList.addToFront("6a");
-        myList.addToFront("5a");
-        myList.addToFront("4a");
-        myList.addToFront("3a");
-        myList.addToFront("2a");
-        myList.addToFront("1a");
-        myList.addToFront("0a");
-        System.out.println(Arrays.toString(myList.getBackingArray()));
-//        myList.addToFront(6);
-//        myList.addToFront(7);
-//        myList.addToFront(8);
-//        myList.addToFront(9);
-        myList.removeFromFront();
-//        myList.addToBack(1);
-        myList.removeFromBack();
-        // ArrayList<Integer> myList = new ArrayList<Integer>(10);
-        System.out.print("\n");
-        System.out.print(myList);
 
-//        for (int i = 1; i <= 5; i++) {
-//            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-//            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-//            System.out.println("i = " + i);
-//        }
-    }
-}
 
