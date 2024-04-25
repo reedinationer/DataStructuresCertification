@@ -118,38 +118,5 @@ public class ArrayQueue<T> {
         // DO NOT MODIFY THIS METHOD!
         return size;
     }
-
-    public static void main(String[] args) {
-        args = new String[0];
-        Main.main(args);
-    }
 }
 
-class Main{
-    public static void main(String[] args) {
-        ArrayQueue<String> myList = new ArrayQueue<String>();
-        myList.enqueue("11a");
-        myList.enqueue("10a");
-        myList.enqueue("9a");
-        myList.enqueue("8a");
-        myList.enqueue("7a");
-        myList.enqueue("6a");
-        myList.enqueue("5a");
-        myList.enqueue("4a");
-        myList.dequeue();
-        myList.enqueue("3a");
-        myList.enqueue("2a");
-        myList.enqueue("1a");
-        myList.dequeue();
-        myList.enqueue("0a");
-        System.out.println(Arrays.toString(myList.getBackingArray()));
-
-
-        myList.dequeue();
-        myList.dequeue();
-        // ArrayList<Integer> myList = new ArrayList<Integer>(10);
-        System.out.print("\n");
-        System.out.print(Arrays.toString(myList.getBackingArray()));
-
-    }
-}
