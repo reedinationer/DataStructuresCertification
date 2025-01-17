@@ -21,7 +21,7 @@ public class IterativeSorting {
      *
      * @param <T>        Data type to sort.
      * @param arr        The array that must be sorted after the method runs.
-     * @param comparator The Comparator used to compare the data in arr.
+     *
      */
 
     private static <T> void swapArrayValues(T[] arr, int index1, int index2) {
@@ -166,4 +166,4 @@ public class IterativeSorting {
 //        this.setTimesCalled(this.timesCalled + 1);
 //        return a.compareTo(b);
 //    }
-}
+//}
