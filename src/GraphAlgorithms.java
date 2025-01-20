@@ -3,6 +3,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+import java.util.List;
 
 /**
  * Your implementation of Prim's algorithm.
@@ -40,23 +41,32 @@ public class GraphAlgorithms {
      */
     public static <T> Set<Edge<T>> prims(Vertex<T> start, Graph<T> graph) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        Set<Edge<T>> result = new HashSet<>();
-        PriorityQueue<T> queue = new PriorityQueue<>();
-
-
+        Set<Vertex<T>> visitedNodes = new HashSet<>(); // Store visited nodes
+        Set<Edge<T>> result = new HashSet<>(); // Store the edges of our tree
+        PriorityQueue<Edge<T>> queue = new PriorityQueue<>();
+        Map<Vertex<T>, List<VertexDistance<T>>> adjacency = graph.getAdjList();
+        for (VertexDistance<T> neighbor : adjacency.get(start)) {
+            if (start != neighbor.getVertex()) { // Check that the edge doesn't point to itself
+                queue.add(new Edge<>(start, neighbor.getVertex(), neighbor.getDistance()));
+            }
+        }
+        visitedNodes.add(start);
+        Edge<T> currentEdge;
+        while (!queue.isEmpty() && visitedNodes.size() != graph.getVertices().size()) {
+            currentEdge = queue.poll();
+            if (!visitedNodes.contains(currentEdge.getV())) {
+                visitedNodes.add(currentEdge.getV()); // Mark nodes off as we visit them
+                result.add(currentEdge); // Save the edges for both directions
+                result.add(new Edge<>(currentEdge.getV(), currentEdge.getU(), currentEdge.getWeight()));
+                for (VertexDistance<T> neighbor : adjacency.get(currentEdge.getV())) { // With the new vertex added we have probably cut other edges
+                    if (!visitedNodes.contains(neighbor.getVertex())) { // If these cut edges are between non-visited nodes, enqueue them
+                        if (currentEdge.getV() != neighbor.getVertex()) { // Check that the edge doesn't point to itself
+                            queue.add(new Edge<>(currentEdge.getV(), neighbor.getVertex(), neighbor.getDistance()));
+                        }
+                    }
+                }
+            }
+        }
         return result;
-    }
-
-    private static <T> void helper(Graph<T> graph, Vertex<T> v, List<Vertex<T>> result){
-//        if (!result.contains(v)){
-//            result.add(v); // Mark u as visited
-//            Map<Vertex<T>, List<VertexDistance<T>>> adjacency = graph.getAdjList();
-//            for (VertexDistance<T> neighbor : adjacency.get(v)) { // Loop over adjacent neighbors
-//                if (!result.contains(neighbor.getVertex())){ // If we haven't visited it, recursively call that node
-//                    helper(graph, neighbor.getVertex(), result);
-//                }
-//            }
-//        }
-        return;
     }
 }

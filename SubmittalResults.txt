@@ -1,0 +1,18 @@
+submittal 3
+
+[Executed at: Sun Jan 19 20:38:15 PST 2025]
+
+============================================================
+GraphAlgorithms.java successfully compiled.
+============================================================
+Tests Passed: 12 / 15
+
+[Test Failure: prims] [-0.67] : MST was found when no MST should have been found.
+
+[Test Failure: prims] [-0.67] : MST was found when no MST should have been found.
+
+[Test Failure: unmodified] [-0.67] : Graph structure could not be validated for the following method(s) due to early test failure(s): prims.
+
+
+Score: 8.0 / 10.0
+============================================================
